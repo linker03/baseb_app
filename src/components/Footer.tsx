@@ -12,6 +12,7 @@ const FooterContainer = styled.footer`
   padding: 16px;
   height: 40px;
   font-size: 1.4rem;
+  box-sizing: border-box;
 
   a {
     padding: 8px;

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Layout } from './components/Layout';
+import { UnauthorizedRoutes } from './routes/UnauthorizedRoutes';
 
 function App() {
   return (
     <div className="App">
-      <Layout />
+      <UnauthorizedRoutes />
     </div>
   );
 }

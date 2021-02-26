@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Logo} from '../assets/svg/Logo'
+import { Logo } from '../assets/svg/Logo';
 
 const HeaderContainer = styled.header`
   background: #fff;
@@ -13,6 +13,7 @@ const HeaderContainer = styled.header`
   grid-column-end: span 2;
   align-items: center;
   padding: 8px;
+  box-sizing: border-box;
 `;
 
 const LogoLink = styled.a`
@@ -24,7 +25,7 @@ export const Header = () => {
     <HeaderContainer>
       <LogoLink>
         <div>
-          <Logo/>
+          <Logo />
         </div>
       </LogoLink>
     </HeaderContainer>

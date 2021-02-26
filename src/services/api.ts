@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { APIBaseUrl, APISignIn, APISignUp } from '../utils/constants';
 
 const config = {
   method: 'POST',
@@ -16,4 +17,8 @@ export const ax = Axios({
     email: 'linker05@yandex.ru',
     password: 'qwerty123456',
   },
+});
+
+export const axInstance = Axios.create({
+  baseURL: APIBaseUrl,
 });

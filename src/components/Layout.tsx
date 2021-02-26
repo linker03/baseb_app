@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Content } from './Content';
-import { LoginScreen } from './LoginScreen';
 
 const MainContainer = styled.main`
   display: grid;
@@ -14,13 +13,11 @@ const MainContainer = styled.main`
   /* font-size: 1.6rem; */
 `;
 
-export const Layout = () => {
+export const Layout: React.FC = ({ children }) => {
   return (
     <MainContainer>
       <Header />
-      <Content>
-        <LoginScreen />
-      </Content>
+      <Content>{children}</Content>
       <Footer />
     </MainContainer>
   );
