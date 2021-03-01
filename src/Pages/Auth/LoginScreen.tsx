@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Form, Field } from 'react-final-form';
 import { Link } from 'react-router-dom';
-import { axInstance } from '../services/api';
-import { APISignIn } from '../utils/constants';
-import APIProvider from '../services/ApiProvider';
-import ApiProvider from '../services/ApiProvider';
+import AuthApi from '../../services/AuthApi';
+import { AxiosResponse } from 'axios';
+import { useDispatch } from 'react-redux';
+import { sagaAuthActions } from '../../store/Auth/actions';
 
 const LoginForm = styled.div`
   background: hsla(0, 0%, 100%, 0.8);
@@ -134,20 +134,24 @@ export const LoginScreen = () => {
     error: false,
   });
 
+  const dispatch = useDispatch();
+
   const onSubmit = (values: any) => {
-    ApiProvider.signIn(values);
-    console.log(ApiProvider.token);
-    // try {
-    //   const response = await axInstance.post(APISignIn, values);
-    //   if (response) {
-    //     console.log(response.data.data.uid);
-    //     console.log(response.headers['access-token']);
-    //     console.log(response.headers.client);
-    //   }
-    // } catch (err) {
-    //   setState({ error: true });
-    // }
+    dispatch({ type: sagaAuthActions.LOGIN_USER_SAGA, payload: values });
   };
+
+  // const onSubmit = async (values: any) => {
+  //   try {
+  //     const response: AxiosResponse = await AuthApi.signin(values);
+  //     if (response) {
+  //       console.log(response);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     setState({ error: true });
+  //   }
+
+  // };
 
   return (
     <LoginForm>

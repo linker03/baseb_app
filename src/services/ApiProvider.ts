@@ -1,6 +1,9 @@
 import Axios from 'axios';
-import { unAuthorizedAxios } from './unAuthorizedAxios';
-import { APISignIn } from '../utils/constants';
+import { APISignIn, APIBaseUrl } from '../utils/constants';
+
+const unAuthorizedAxios = Axios.create({
+  baseURL: APIBaseUrl,
+});
 
 type SignInArgs = {
   email: string;

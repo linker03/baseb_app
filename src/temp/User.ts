@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { User, Company, UserAvatar } from 'Interfaces/User';
 import Api from './Api';
 import {
@@ -29,7 +30,11 @@ class UserApi extends Api {
     const { phone, scope } = payload;
     const params: AxiosRequestConfig['params'] = { scope };
 
-    return this.request.post()(`user/generate_twillio_code`, { phone }, { params });
+    return this.request.post()(
+      `user/generate_twillio_code`,
+      { phone },
+      { params }
+    );
   };
 
   verifyGoogleCode = async (payload: CodePayload) =>
@@ -39,9 +44,13 @@ class UserApi extends Api {
     this.request.post()(`user/disable_google_authenticator`, payload);
 
   enableGoogleAuthenticator = async () => {
-    return this.request.post()<Blob>(`user/enable_google_authenticator`, undefined, {
-      responseType: 'blob',
-    });
+    return this.request.post()<Blob>(
+      `user/enable_google_authenticator`,
+      undefined,
+      {
+        responseType: 'blob',
+      }
+    );
   };
 
   deleteAccount = async () => this.request.delete()<User>(`user`);
@@ -55,7 +64,9 @@ class UserApi extends Api {
   };
 
   getSignersAvatars = (payload: DocumentIdPayload) => {
-    return this.request.get()<UserAvatar[]>(`user/signers_avatars/${payload.documentId}`);
+    return this.request.get()<UserAvatar[]>(
+      `user/signers_avatars/${payload.documentId}`
+    );
   };
 }
 

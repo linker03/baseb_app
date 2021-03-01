@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Form, Field } from 'react-final-form';
 import { Link } from 'react-router-dom';
-import { Checked } from '../assets/svg/Checked';
+import { Checked } from '../../assets/svg/Checked';
 
 const SignUpForm = styled.div`
   background: hsla(0, 0%, 100%, 0.8);

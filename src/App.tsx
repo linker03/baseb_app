@@ -1,10 +1,14 @@
 import React from 'react';
-import { UnauthorizedRoutes } from './routes/UnauthorizedRoutes';
+import { RootRouter } from './routes/RootRouter';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 function App() {
   return (
     <div className="App">
-      <UnauthorizedRoutes />
+      <Provider store={store}>
+        <RootRouter />
+      </Provider>
     </div>
   );
 }

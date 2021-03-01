@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Api from './Api';
 import {
   AuthData,
@@ -24,10 +25,13 @@ class AuthApi extends Api {
   signInTwillio = ({ token, payload }: TokenizedPayload<TwillioAuthData>) =>
     this.request.post(token)<AuthResponseData>('auth/sign_in/twillio', payload);
 
-  signInGoogleAuthenticator = ({ token, payload }: TokenizedPayload<CodePayload>) =>
+  signInGoogleAuthenticator = ({
+    token,
+    payload,
+  }: TokenizedPayload<CodePayload>) =>
     this.request.post(token)<UserResponseData>(
       'auth/sign_in/google_authenticator',
-      payload,
+      payload
     );
 
   googleSignIn = (payload: AuthData) =>
@@ -45,17 +49,29 @@ class AuthApi extends Api {
   sendPasswordChangeEmail = async (payload: EmailPayload) =>
     this.request.post()(`auth/change_password/send_mail`, payload);
 
-  changePassword = async ({ token, payload }: TokenizedPayload<PasswordChangeData>) =>
+  changePassword = async ({
+    token,
+    payload,
+  }: TokenizedPayload<PasswordChangeData>) =>
     this.request.post(token)(`auth/change_password/change`, payload);
 
-  getSignedGetUrl = ({ token, payload }: TokenizedPayload<SignedUrlPayload>) => {
-    return this.request.post(token)<SignedUrlResponse>('auth/get_signed_url', payload);
+  getSignedGetUrl = ({
+    token,
+    payload,
+  }: TokenizedPayload<SignedUrlPayload>) => {
+    return this.request.post(token)<SignedUrlResponse>(
+      'auth/get_signed_url',
+      payload
+    );
   };
 
-  getSignedGetUrlBulk = ({ token, payload }: TokenizedPayload<BulkSignedUrlPayload>) => {
+  getSignedGetUrlBulk = ({
+    token,
+    payload,
+  }: TokenizedPayload<BulkSignedUrlPayload>) => {
     return this.request.post(token)<BulkSignedUrlResponse>(
       'auth/get_signed_url/bulk',
-      payload,
+      payload
     );
   };
 
@@ -63,12 +79,18 @@ class AuthApi extends Api {
     this.request.post(token)<SignedUrlResponse>('auth/put_signed_url', payload);
 
   getSignedPutAssetUrl = (payload: SignedUrlPayload) =>
-    this.request.post()<SignedUrlResponse>('auth/put_signed_asset_url', payload);
+    this.request.post()<SignedUrlResponse>(
+      'auth/put_signed_asset_url',
+      payload
+    );
 
-  getSignedDownloadUrl = ({ token, payload }: TokenizedPayload<SignedUrlPayload>) => {
+  getSignedDownloadUrl = ({
+    token,
+    payload,
+  }: TokenizedPayload<SignedUrlPayload>) => {
     return this.request.post(token)<SignedUrlResponse>(
       'auth/get_signed_download_url',
-      payload,
+      payload
     );
   };
 

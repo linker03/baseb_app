@@ -26,6 +26,7 @@ export const authSlice = createSlice({
         token: action.payload.token,
         client: action.payload.client,
         uid: action.payload.uid,
+        isLoged: true,
       };
     },
     setError: (state) => {

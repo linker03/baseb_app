@@ -1,3 +1,4 @@
+// @ts-nocheck
 import httpClient from 'Services/HttpClient';
 import StorageService from 'Services/Storage';
 import { AuthResponseData, UserResponseData } from 'Interfaces/Auth';
