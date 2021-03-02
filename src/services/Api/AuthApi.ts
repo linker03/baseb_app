@@ -1,5 +1,5 @@
 import ApiService from './Api';
-import { APIBaseUrl, APISignIn } from '../utils/constants';
+import { API_SIGNIN } from '../../utils/constants';
 
 interface AuthData {
   email: string;
@@ -7,8 +7,7 @@ interface AuthData {
 }
 
 class AuthApi extends ApiService {
-  signin = (payload: AuthData): any =>
-    this.request.post()(`${APIBaseUrl + APISignIn}`, payload);
+  signin = (payload: AuthData): any => this.request.post()(API_SIGNIN, payload);
 }
 
 export default new AuthApi();

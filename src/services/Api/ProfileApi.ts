@@ -1,5 +1,5 @@
 import ApiService from './Api';
-import { APIBaseUrl, APIGraphql } from '../utils/constants';
+import { API_GRAPHQL } from '../../utils/constants';
 
 interface ProfileData {
   query: string;
@@ -8,7 +8,7 @@ interface ProfileData {
 
 class ProfileApi extends ApiService {
   getProfileData = (payload: ProfileData) =>
-    this.request.post()(`${APIBaseUrl + APIGraphql}`, payload);
+    this.request.post()(API_GRAPHQL, payload);
 }
 
 export default new ProfileApi();

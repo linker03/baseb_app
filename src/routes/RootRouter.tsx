@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UnauthorizedRoutes } from './UnauthorizedRoutes';
 import { AuthorizedRoutes } from './AuthorizedRoutes';
 import { RootState } from '../store/store';
-import Loading from '../utils/Loading';
+import Loading from '../components/Loading';
 import { sagaAuthActions } from '../store/Auth/actions';
+import { currentProfileQuery } from '../services/Api/queries';
+import { AUTH_STATUS } from '../types/auth';
 
 export const RootRouter = () => {
   const status = useSelector((state: RootState) => state.authStore.status);
@@ -13,7 +15,10 @@ export const RootRouter = () => {
 
   const checkLogin = () => {
     console.log('Checklogin');
-    dispatch({ type: sagaAuthActions.CHECK_LOGIN });
+    dispatch({
+      type: sagaAuthActions.CHECK_LOGIN,
+      payload: currentProfileQuery(),
+    });
   };
 
   useEffect(() => {
@@ -24,11 +29,11 @@ export const RootRouter = () => {
   }, [status]);
 
   switch (status) {
-    case 'Logged':
+    case AUTH_STATUS.Logged:
       return <AuthorizedRoutes />;
-    case 'NotLogged':
+    case AUTH_STATUS.NotLogged:
       return <UnauthorizedRoutes />;
-    case 'Unknown':
+    case AUTH_STATUS.Unknown:
       return <Loading />;
     default:
       return <Loading />;

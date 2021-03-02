@@ -10,12 +10,10 @@ export const AuthorizedRoutes = () => {
   return (
     <Router history={history}>
       <Switch>
-        <Route exact path="/">
-          <Redirect to="/profile" />
-        </Route>
         <Route path="/profile">
           <ProfilePage />
         </Route>
+        <Redirect to="/profile" />
       </Switch>
     </Router>
   );

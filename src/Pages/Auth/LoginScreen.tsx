@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Form, Field } from 'react-final-form';
 import { Link } from 'react-router-dom';
-import AuthApi from '../../services/AuthApi';
+import AuthApi from '../../services/Api/AuthApi';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import { sagaAuthActions } from '../../store/Auth/actions';

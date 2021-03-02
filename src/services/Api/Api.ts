@@ -1,19 +1,19 @@
 // import httpClient from 'Services/HttpClient';
-import { StorageService } from './Storage';
+import { StorageService } from '../Storage';
 // import { AuthResponseData, UserResponseData } from 'Interfaces/Auth';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 // import StorageService from 'Services/Storage';
-import { APIBaseUrl } from '../utils/constants';
+import { API_BASE_URL } from '../../utils/constants';
 
-const httpClient = async (
+const httpClient = (
   accessToken?: string,
   accessClient?: string,
   accessUid?: string
 ) => {
-  const token = accessToken || (await StorageService.getAccessToken());
-  const client = accessClient || (await StorageService.getClient());
-  const uid = accessUid || (await StorageService.getUid());
+  const token = accessToken || StorageService.getAccessToken();
+  const client = accessClient || StorageService.getClient();
+  const uid = accessUid || StorageService.getUid();
   let headers = {};
 
   if (token) {
@@ -25,7 +25,7 @@ const httpClient = async (
   }
   const instance = axios.create({
     headers,
-    baseURL: APIBaseUrl,
+    baseURL: API_BASE_URL,
   });
   return instance;
 };

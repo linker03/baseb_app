@@ -1,8 +1,10 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
 import { setLogin, setNotLogin, setError } from './reducer';
 import { sagaAuthActions } from './actions';
-import AuthApi from '../../services/AuthApi';
+import AuthApi from '../../services/Api/AuthApi';
 import { StorageService } from '../../services/Storage';
+import ProfileApi from '../../services/Api/ProfileApi';
+import { getCurrentProfile } from '../Profile/reducer';
 
 type loginAction = {
   type: string;
@@ -28,16 +30,17 @@ export function* loginSaga(action: loginAction) {
   }
 }
 
-export function* checkLoginSaga() {
+export function* checkLoginSaga(action: any) {
   try {
     const token = StorageService.getAccessToken();
-    if (token) {
-      yield put(setLogin());
-    } else {
-      yield put(setNotLogin());
-    }
+    // @ts-ignore
+    const response = yield call(ProfileApi.getProfileData, action.payload);
+    console.log(response);
+    yield put(getCurrentProfile(response.data.data.current_profile));
+    yield put(setLogin());
   } catch (error) {
     console.log('erora', error);
+    yield put(setNotLogin());
   }
 }
 

@@ -11,15 +11,13 @@ export const UnauthorizedRoutes = () => {
   return (
     <Router history={history}>
       <Switch>
-        <Route exact path="/">
-          <Redirect to="/login" />
-        </Route>
         <Route path="/login">
           <AuthPage signIn={true} />
         </Route>
         <Route path="/register">
           <AuthPage signIn={false} />
         </Route>
+        <Redirect to="/login" />
       </Switch>
     </Router>
   );

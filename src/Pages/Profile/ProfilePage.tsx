@@ -11,7 +11,7 @@ import { Bats } from '../../assets/svg/Bats';
 import { ProgressBar } from './ProgressBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { sagaProfileActions } from '../../store/Profile/actions';
-import { currentProfileQuery } from '../../utils/queries';
+import { currentProfileQuery } from '../../services/Api/queries';
 import { RootState } from '../../store/store';
 
 const FlexContainer = styled.div`
@@ -97,6 +97,7 @@ const NameSecondLine = styled.div`
   font-size: 16px;
   line-height: 19px;
   color: #788b99;
+  text-transform: capitalize;
 `;
 
 const NameThirdLine = styled.div`
@@ -104,6 +105,7 @@ const NameThirdLine = styled.div`
   line-height: 19px;
   color: #788b99;
   border-top: 1px solid #cbcccd;
+  text-transform: capitalize;
 `;
 
 const PersonalInfo = styled.div`
@@ -294,13 +296,18 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     console.log('effect profile');
-    dispatch({
-      type: sagaProfileActions.GET_CURRENT_PROFILE_SAGA,
-      payload: currentProfileQuery(),
-    });
+    if (currentProfile.id === '') {
+      dispatch({
+        type: sagaProfileActions.GET_CURRENT_PROFILE_SAGA,
+        payload: currentProfileQuery(),
+      });
+    }
   }, []);
 
   const currentProfile = useSelector((state: RootState) => state.profileStore);
+  const position2 = currentProfile.position2
+    ? currentProfile.position2.split('_').join(' ')
+    : '';
 
   return (
     <Layout>
@@ -330,7 +337,7 @@ export const ProfilePage = () => {
                 {currentProfile.first_name} {currentProfile.last_name}
               </NameFirstLine>
               <NameSecondLine>{currentProfile.position}</NameSecondLine>
-              <NameThirdLine>{currentProfile.position2}</NameThirdLine>
+              <NameThirdLine>{position2}</NameThirdLine>
             </NameContainer>
             <PersonalInfo>
               <PersonalInfoItem>

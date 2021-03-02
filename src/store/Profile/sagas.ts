@@ -1,7 +1,7 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
 import { getCurrentProfile } from './reducer';
 import { sagaProfileActions } from './actions';
-import ProfileApi from '../../services/ProfileApi';
+import ProfileApi from '../../services/Api/ProfileApi';
 import { StorageService } from '../../services/Storage';
 
 export function* getCurrentProfileSaga(action: any) {

@@ -1,10 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-enum status {
-  Logged,
-  NotLogged,
-  Unknown,
-}
+import { AUTH_STATUS } from '../../types/auth';
 
 type AuthInitialState = {
   error: boolean;
@@ -13,7 +8,7 @@ type AuthInitialState = {
 
 const initialStateAuth: AuthInitialState = {
   error: false,
-  status: 'Unknown',
+  status: AUTH_STATUS.Unknown,
 };
 
 export const authSlice = createSlice({
@@ -23,7 +18,7 @@ export const authSlice = createSlice({
     setLogin: (state) => {
       return {
         ...state,
-        status: status[0],
+        status: AUTH_STATUS.Logged,
       };
     },
     setError: (state) => {
@@ -35,7 +30,7 @@ export const authSlice = createSlice({
     setNotLogin: (state) => {
       return {
         ...state,
-        status: status[1],
+        status: AUTH_STATUS.NotLogged,
       };
     },
   },
