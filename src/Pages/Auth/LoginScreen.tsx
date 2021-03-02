@@ -138,6 +138,7 @@ export const LoginScreen = () => {
 
   const onSubmit = (values: any) => {
     dispatch({ type: sagaAuthActions.LOGIN_USER_SAGA, payload: values });
+    // window.location.href = 'http://localhost:3000/profile';
   };
 
   // const onSubmit = async (values: any) => {
@@ -169,7 +170,7 @@ export const LoginScreen = () => {
                   <Field
                     name="email"
                     component="input"
-                    type="text"
+                    type="email"
                     placeholder="Email"
                   />
                 </InputSide>
@@ -182,7 +183,7 @@ export const LoginScreen = () => {
                   <Field
                     name="password"
                     component="input"
-                    type="text"
+                    type="password"
                     placeholder="Password"
                   />
                 </InputSide>

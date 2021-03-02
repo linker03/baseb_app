@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Layout } from '../../components/Layout';
 import { Pencil } from '../../assets/svg/Pencil';
@@ -9,6 +9,10 @@ import { Weight } from '../../assets/svg/Weight';
 import { Throws } from '../../assets/svg/Throws';
 import { Bats } from '../../assets/svg/Bats';
 import { ProgressBar } from './ProgressBar';
+import { useDispatch, useSelector } from 'react-redux';
+import { sagaProfileActions } from '../../store/Profile/actions';
+import { currentProfileQuery } from '../../utils/queries';
+import { RootState } from '../../store/store';
 
 const FlexContainer = styled.div`
   display: flex;
@@ -286,127 +290,159 @@ const EmptyMessage = styled.div`
 `;
 
 export const ProfilePage = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('effect profile');
+    dispatch({
+      type: sagaProfileActions.GET_CURRENT_PROFILE_SAGA,
+      payload: currentProfileQuery(),
+    });
+  }, []);
+
+  const currentProfile = useSelector((state: RootState) => state.profileStore);
+
   return (
     <Layout>
-      <ProfileContainer>
-        <Sidebar>
-          <UserInfo>
-            <EditButton>
-              <IconContainer>
-                <Pencil />
-              </IconContainer>
-            </EditButton>
-            <UserAvatarContainer>
-              <UserAvatar style={{ backgroundImage: `url(${avatar})` }} />
-            </UserAvatarContainer>
-          </UserInfo>
-          <NameContainer>
-            <NameFirstLine>fasdfas sdafasdf</NameFirstLine>
-            <NameSecondLine>Catcher</NameSecondLine>
-            <NameThirdLine>First Base</NameThirdLine>
-          </NameContainer>
-          <PersonalInfo>
-            <PersonalInfoItem>
-              <span>
-                <Age />
-              </span>
-              <span>Age</span>
-              <span>2</span>
-            </PersonalInfoItem>
-            <PersonalInfoItem>
-              <span>
-                <Height />
-              </span>
-              Height<span></span>
-              <span>6 ft 6 in</span>
-            </PersonalInfoItem>
-            <PersonalInfoItem>
-              <span>
-                <Weight />
-              </span>
-              <span>Weight</span>
-              <span>234 lbs</span>
-            </PersonalInfoItem>
-            <PersonalInfoItem>
-              <span>
-                <Throws />
-              </span>
-              <span>Throws</span>
-              <span>R</span>
-            </PersonalInfoItem>
-            <PersonalInfoItem>
-              <span>
-                <Bats />
-              </span>
-              <span>Bats</span>
-              <span>R</span>
-            </PersonalInfoItem>
-          </PersonalInfo>
-          <SchoolInfoContainer>
-            <SchoolItem>
-              <SchoolItemFirst>School</SchoolItemFirst>
-              <SchoolItemSecond>Rockledge</SchoolItemSecond>
-            </SchoolItem>
-            <SchoolItem>
-              <SchoolItemFirst>School Year</SchoolItemFirst>
-              <SchoolItemSecond>Sophomore</SchoolItemSecond>
-            </SchoolItem>
-            <SchoolItem>
-              <SchoolItemFirst>Team</SchoolItemFirst>
-              <SchoolItemSecond>FTB</SchoolItemSecond>
-            </SchoolItem>
-            <SchoolAbout>
-              <AboutTitle>About</AboutTitle>
-            </SchoolAbout>
-            <AboutText>sadfwef</AboutText>
-          </SchoolInfoContainer>
-        </Sidebar>
-        <Main>
-          <SummaryEventsContainer>
-            <PitcherSummary className="card">
-              <FlexContainer>
-                <PitcherTitle>Top Batting Values</PitcherTitle>
-              </FlexContainer>
-              <ProgressContainer>
-                <ProgressItem>
-                  <ProgressItemTitle>
-                    <ProgressItemText>Exit Velocity</ProgressItemText>
-                    <ProgressItemValue>N/A</ProgressItemValue>
-                  </ProgressItemTitle>
-                  <ProgressBarContainer>
-                    <ProgressBar progress={15}></ProgressBar>
-                  </ProgressBarContainer>
-                </ProgressItem>
-                <ProgressItem>
-                  <ProgressItemTitle>
-                    <ProgressItemText>Carry Distance</ProgressItemText>
-                    <ProgressItemValue>N/A</ProgressItemValue>
-                  </ProgressItemTitle>
-                  <ProgressBarContainer>
-                    <ProgressBar progress={15}></ProgressBar>
-                  </ProgressBarContainer>
-                </ProgressItem>
-                <ProgressItem>
-                  <ProgressItemTitle>
-                    <ProgressItemText>Launch Angle</ProgressItemText>
-                    <ProgressItemValue>N/A</ProgressItemValue>
-                  </ProgressItemTitle>
-                  <ProgressBarContainer>
-                    <ProgressBar progress={15}></ProgressBar>
-                  </ProgressBarContainer>
-                </ProgressItem>
-              </ProgressContainer>
-            </PitcherSummary>
-            <RecentEvents className="card">
-              <RecentEventsTitle>Recent Session Reports</RecentEventsTitle>
-              <EmptyMessage>
-                No data currently linked to this profile
-              </EmptyMessage>
-            </RecentEvents>
-          </SummaryEventsContainer>
-          <FlexContainer className="card"></FlexContainer>
-        </Main>
-      </ProfileContainer>
+      {currentProfile.id != '' && (
+        <ProfileContainer>
+          <Sidebar>
+            <UserInfo>
+              <EditButton>
+                <IconContainer>
+                  <Pencil />
+                </IconContainer>
+              </EditButton>
+              <UserAvatarContainer>
+                <UserAvatar
+                  style={{
+                    backgroundImage: `url(${
+                      currentProfile.avatar == null
+                        ? avatar
+                        : currentProfile.avatar
+                    })`,
+                  }}
+                />
+              </UserAvatarContainer>
+            </UserInfo>
+            <NameContainer>
+              <NameFirstLine>
+                {currentProfile.first_name} {currentProfile.last_name}
+              </NameFirstLine>
+              <NameSecondLine>{currentProfile.position}</NameSecondLine>
+              <NameThirdLine>{currentProfile.position2}</NameThirdLine>
+            </NameContainer>
+            <PersonalInfo>
+              <PersonalInfoItem>
+                <span>
+                  <Age />
+                </span>
+                <span>Age</span>
+                <span>{currentProfile.age}</span>
+              </PersonalInfoItem>
+              <PersonalInfoItem>
+                <span>
+                  <Height />
+                </span>
+                Height<span></span>
+                <span>
+                  {currentProfile.feet} ft {currentProfile.inches} in
+                </span>
+              </PersonalInfoItem>
+              <PersonalInfoItem>
+                <span>
+                  <Weight />
+                </span>
+                <span>Weight</span>
+                <span>{currentProfile.weight} lbs</span>
+              </PersonalInfoItem>
+              <PersonalInfoItem>
+                <span>
+                  <Throws />
+                </span>
+                <span>Throws</span>
+                <span>{currentProfile.throws_hand}</span>
+              </PersonalInfoItem>
+              <PersonalInfoItem>
+                <span>
+                  <Bats />
+                </span>
+                <span>Bats</span>
+                <span>{currentProfile.bats_hand}</span>
+              </PersonalInfoItem>
+            </PersonalInfo>
+            <SchoolInfoContainer>
+              <SchoolItem>
+                <SchoolItemFirst>School</SchoolItemFirst>
+                <SchoolItemSecond>
+                  {currentProfile.school.name}
+                </SchoolItemSecond>
+              </SchoolItem>
+              <SchoolItem>
+                <SchoolItemFirst>School Year</SchoolItemFirst>
+                <SchoolItemSecond>
+                  {currentProfile.school_year}
+                </SchoolItemSecond>
+              </SchoolItem>
+              <SchoolItem>
+                <SchoolItemFirst>Team</SchoolItemFirst>
+                <SchoolItemSecond>
+                  {currentProfile.teams[0].name}
+                </SchoolItemSecond>
+              </SchoolItem>
+              <SchoolAbout>
+                <AboutTitle>About</AboutTitle>
+              </SchoolAbout>
+              <AboutText>{currentProfile.biography}</AboutText>
+            </SchoolInfoContainer>
+          </Sidebar>
+          <Main>
+            <SummaryEventsContainer>
+              <PitcherSummary className="card">
+                <FlexContainer>
+                  <PitcherTitle>Top Batting Values</PitcherTitle>
+                </FlexContainer>
+                <ProgressContainer>
+                  <ProgressItem>
+                    <ProgressItemTitle>
+                      <ProgressItemText>Exit Velocity</ProgressItemText>
+                      <ProgressItemValue>N/A</ProgressItemValue>
+                    </ProgressItemTitle>
+                    <ProgressBarContainer>
+                      <ProgressBar progress={15}></ProgressBar>
+                    </ProgressBarContainer>
+                  </ProgressItem>
+                  <ProgressItem>
+                    <ProgressItemTitle>
+                      <ProgressItemText>Carry Distance</ProgressItemText>
+                      <ProgressItemValue>N/A</ProgressItemValue>
+                    </ProgressItemTitle>
+                    <ProgressBarContainer>
+                      <ProgressBar progress={15}></ProgressBar>
+                    </ProgressBarContainer>
+                  </ProgressItem>
+                  <ProgressItem>
+                    <ProgressItemTitle>
+                      <ProgressItemText>Launch Angle</ProgressItemText>
+                      <ProgressItemValue>N/A</ProgressItemValue>
+                    </ProgressItemTitle>
+                    <ProgressBarContainer>
+                      <ProgressBar progress={15}></ProgressBar>
+                    </ProgressBarContainer>
+                  </ProgressItem>
+                </ProgressContainer>
+              </PitcherSummary>
+              <RecentEvents className="card">
+                <RecentEventsTitle>Recent Session Reports</RecentEventsTitle>
+                <EmptyMessage>
+                  No data currently linked to this profile
+                </EmptyMessage>
+              </RecentEvents>
+            </SummaryEventsContainer>
+            <FlexContainer className="card"></FlexContainer>
+          </Main>
+        </ProfileContainer>
+      )}
     </Layout>
   );
 };

@@ -1,32 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+enum status {
+  Logged,
+  NotLogged,
+  Unknown,
+}
+
 type AuthInitialState = {
-  token: string;
-  client: string;
-  uid: string;
   error: boolean;
-  isLoged: boolean;
+  status: string;
 };
 
 const initialStateAuth: AuthInitialState = {
-  token: '',
-  client: '',
-  uid: '',
   error: false,
-  isLoged: false,
+  status: 'Unknown',
 };
 
 export const authSlice = createSlice({
   name: 'authSlice',
   initialState: initialStateAuth,
   reducers: {
-    setLogin: (state, action) => {
+    setLogin: (state) => {
       return {
         ...state,
-        token: action.payload.token,
-        client: action.payload.client,
-        uid: action.payload.uid,
-        isLoged: true,
+        status: status[0],
       };
     },
     setError: (state) => {
@@ -35,7 +32,13 @@ export const authSlice = createSlice({
         error: true,
       };
     },
+    setNotLogin: (state) => {
+      return {
+        ...state,
+        status: status[1],
+      };
+    },
   },
 });
 
-export const { setLogin, setError } = authSlice.actions;
+export const { setLogin, setError, setNotLogin } = authSlice.actions;

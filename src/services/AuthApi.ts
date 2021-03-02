@@ -7,7 +7,7 @@ interface AuthData {
 }
 
 class AuthApi extends ApiService {
-  signin = (payload: AuthData) =>
+  signin = (payload: AuthData): any =>
     this.request.post()(`${APIBaseUrl + APISignIn}`, payload);
 }
 

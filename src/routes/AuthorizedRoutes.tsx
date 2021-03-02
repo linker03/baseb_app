@@ -6,6 +6,7 @@ import { ProfilePage } from '../Pages/Profile/ProfilePage';
 const history = createBrowserHistory();
 
 export const AuthorizedRoutes = () => {
+  console.log('auth loaded');
   return (
     <Router history={history}>
       <Switch>

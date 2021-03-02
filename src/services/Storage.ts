@@ -1,17 +1,21 @@
 export const StorageService = {
-  getAccessToken() {
-    localStorage.getItem('access-token');
+  getAccessToken(): string | null {
+    return localStorage.getItem('access-token');
   },
-  getClient() {
-    localStorage.getItem('client');
+  getClient(): string | null {
+    return localStorage.getItem('client');
   },
-  getUid() {
-    localStorage.getItem('uid');
+  getUid(): string | null {
+    return localStorage.getItem('uid');
   },
-  setCredentials(token: string, client: string, uid: string) {
+  getCurrentUserId(): string | null {
+    return localStorage.getItem('id');
+  },
+  setCredentials(token: string, client: string, uid: string, id: string) {
     console.log(token, client, uid);
     localStorage.setItem('access-token', token);
     localStorage.setItem('client', client);
     localStorage.setItem('uid', uid);
+    localStorage.setItem('id', id);
   },
 };

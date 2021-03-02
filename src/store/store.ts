@@ -7,13 +7,16 @@ import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
 import { authSlice } from './Auth/reducer';
 import authWatcher from './Auth/sagas';
+import { profileSlice } from './Profile/reducer';
+import profileWatcher from './Profile/sagas';
 
 const rootReducer = combineReducers({
   authStore: authSlice.reducer,
+  profileStore: profileSlice.reducer,
 });
 
 function* rootWatcher() {
-  yield all([authWatcher()]);
+  yield all([authWatcher(), profileWatcher()]);
 }
 
 let sagaMiddleware = createSagaMiddleware();

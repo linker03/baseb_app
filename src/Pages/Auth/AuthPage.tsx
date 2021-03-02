@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Layout } from '../../components/Layout';
 import { LoginScreen } from './LoginScreen';
 import { SignUpScreen } from './SignUpScreen';
+import background from '../../assets/images/background.png';
 
 interface AuthPageProps {
   signIn: boolean;
@@ -15,7 +16,6 @@ const LoginContainer = styled.div`
   align-items: center;
   overflow: auto;
   padding: 16px;
-  background-image: url('https://baseballcloud-front.herokuapp.com/e2b853b6994b3e23d56d2dc1139f8d75.png');
   background-position: top center;
   background-size: cover;
 `;
@@ -23,7 +23,7 @@ const LoginContainer = styled.div`
 export const AuthPage: React.FC<AuthPageProps> = ({ signIn = true }) => {
   return (
     <Layout>
-      <LoginContainer>
+      <LoginContainer style={{ backgroundImage: `url(${background})` }}>
         {signIn ? <LoginScreen /> : <SignUpScreen />}
       </LoginContainer>
     </Layout>
